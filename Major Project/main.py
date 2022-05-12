@@ -1,6 +1,6 @@
 import sqlite3
 import datetime
-from bottle import run, route, view, static_file, get, template, request, redirect, create
+from bottle import run, route, view, static_file, get, template, request, redirect, app
 
 # loads css
 @route('/static/<filepath:path>')
@@ -39,10 +39,10 @@ def do_login():
     else:
         return template('login', incorrect="block")
 
-###@route('/login', method='POST')
-###def create table_name():
-   #### return template('create_new.tpl')
 
+@route('/login', method = 'GET')
+def create_table_name():
+    return template('create_new.tpl')
 
 TableName = ''
 
@@ -52,3 +52,6 @@ def create_table():
     global TableName
     TableName = request.forms.get('username').strip()
     conn = sqlite3.connect("TheTable.db")
+
+
+run(host='127.1.0.1', port=8080, reloader=True, debug=True)
