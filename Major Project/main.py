@@ -1,6 +1,8 @@
 import sqlite3
 import datetime
 from bottle import run, route, view, static_file, get, template, request, redirect, app
+from bottle import TEMPLATE_PATH
+
 
 # loads css
 @route('/static/<filepath:path>')
@@ -8,15 +10,16 @@ def load_static(filepath):
     return static_file(filepath, root='./static')
 
     #when pressed, redirected to login page
-@route ('/login')
+@route('/login')
 def login_redirect():
-    redirect('/login')
+    return static_file('static/login.tpl', root='./static')
+    
 
 #load login page
-@route('/')
-@view('login')
-def login():
-    return dict(incorrect="none")
+#@route('/')
+#@view('/login')
+#def login():
+#    return dict(incorrect="none")
 
 #checking database for valid login
 def check_login(username,password):
@@ -37,21 +40,21 @@ def do_login():
     if check_login(username, password):
         return redirect('/index')
     else:
-        return template('login', incorrect="block")
+        return template('static/login.tpl', incorrect="block")
 
 
-@route('/login', method = 'GET')
-def create_table_name():
-    return template('create_new.tpl')
+#@route('/login', method = 'GET')
+#def create_table_name():
+#    return template('static/login.tpl')
 
 TableName = ''
 
 import re
-@route('/login', method = 'POST')
-def create_table():
-    global TableName
-    TableName = request.forms.get('username').strip()
-    conn = sqlite3.connect("TheTable.db")
+#@route('/login', method = 'POST')
+#def create_table():
+#    global TableName
+#    TableName = request.forms.get('username').strip()
+#    conn = sqlite3.connect("TheTable.db")
 
 
-run(host='127.1.0.1', port=8080, reloader=True, debug=True)
+run(host='localhost', port=8080, reloader=True, debug=True)
