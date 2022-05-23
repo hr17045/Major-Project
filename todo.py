@@ -1,8 +1,25 @@
 import sqlite3
-from bottle import route, run, debug, template, request, static_file, error
+from bottle import route, run, debug, template, request, static_file, error, view, static_file
 
 # only needed when you run Bottle on mod_wsgi
 from bottle import default_app
+from datetime import date
+
+#mainpage
+@route('/')
+@view('main')
+def main():
+    today = date.today()
+
+    return dict(
+        day = today.strftime('%A')
+    )
+
+#route for static files
+@route('/static/<filepath:path>')
+def load_static(filepath):
+    return static_file(filepath, root='./static')
+
 
 
 @route('/todo')
@@ -110,6 +127,8 @@ def mistake403(code):
 @error(404)
 def mistake404(code):
     return 'Sorry, this page does not exist!'
+
+
 
 
 debug(True)
