@@ -1,12 +1,14 @@
 import sqlite3
-from bottle import route, run, debug, template, request, static_file, error, view, static_file
+from bottle import route, run, debug, template, request, static_file, error, view, static_file, redirect
 
 # only needed when you run Bottle on mod_wsgi
 from bottle import default_app
 from datetime import date
 
+from flask import redirect
+
 #mainpage
-@route('/')
+@route('/home')
 @view('main')
 def main():
     today = date.today()
@@ -117,6 +119,30 @@ def show_json(json):
         return {'task': 'This item number does not exist!'}
     else:
         return {'task': result[0]}
+
+@route('/signup', method='GET')
+def new_item():
+
+    if request.GET.save:
+
+        new = request.GET.name.strip()
+        new1 = request.GET.password.strip()
+
+
+        conn = sqlite3.connect('login.db')
+        c = conn.cursor()
+
+        c.execute("INSERT INTO details (name,password) VALUES (?,?)", (new,new1))
+
+        conn.commit()
+        c.close()
+        today = date.today()
+
+        
+        return template('main.html', day = today.strftime('%A'))
+    else:
+        return template('signup.html')
+
 
 
 @error(403)
