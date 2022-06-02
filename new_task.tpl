@@ -1,3 +1,5 @@
+<link href="static/style.css" rel="stylesheet" />
+
 %#template for the form for a new task
 <p>Add a new task to the ToDo list:</p>
 <form action="/new" method="GET">

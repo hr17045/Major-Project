@@ -18,7 +18,7 @@ def main():
 #route for static files
 @route('/static/<filepath:path>')
 def load_static(filepath):
-    return static_file(filepath, root='./static')
+    return static_file(filepath, root='C:/Users/Harvey/Desktop/Major-Project/static')
 
 
 
