@@ -143,6 +143,35 @@ def new_item():
     else:
         return template('signup.html')
 
+@route('/login', method='GET')
+def login():
+    if request.GET.save:
+
+        new = request.GET.name.strip()
+        new1 = request.GET.password.strip()
+
+
+        conn = sqlite3.connect('login.db')
+        c = conn.cursor()
+
+        c.execute('SELECT name FROM details')
+        cur_data = c.fetchall()
+        if cur_data != new:
+            print("Incorect details")
+            return template('login.html')
+
+        else:
+            print("correct data")
+            return("profile.html")
+
+        conn.commit()
+        c.close()
+        today = date.today()
+
+        
+        return template('main.html', day = today.strftime('%A'))
+    else:
+        return template('signup.html')
 
 
 @error(403)
