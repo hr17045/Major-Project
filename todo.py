@@ -33,7 +33,7 @@ def todo_list():
     result = c.fetchall()
     c.close()
 
-    output = template('make_table.tpl', rows=result)
+    output = template('make_table.html', rows=result)
     return output
 
 
@@ -55,7 +55,7 @@ def new_item():
         return '<p>The new task was inserted into the database, the ID is %s</p>' % new_id
 
     else:
-        return template('new_task.tpl')
+        return template('new_task.html')
 
 
 @route('/edit/<no:int>', method='GET')
@@ -145,33 +145,29 @@ def new_item():
 
 @route('/login', method='GET')
 def login():
-    if request.GET.save:
-
-        new = request.GET.name.strip()
-        new1 = request.GET.password.strip()
-
-
-        conn = sqlite3.connect('login.db')
-        c = conn.cursor()
-
-        c.execute('SELECT name FROM details')
-        cur_data = c.fetchall()
-        if cur_data != new:
-            print("Incorect details")
-            return template('login.html')
-
+    if request.GET.login:
+        username=request.GET.Name.strip()
+        password=request.GET.Passowrd.strip()
+        if loginCheck():
+            return redirect('/home')
         else:
-            print("correct data")
-            return("profile.html")
-
-        conn.commit()
-        c.close()
-        today = date.today()
-
-        
-        return template('main.html', day = today.strftime('%A'))
+            return redirect('/signup')
     else:
-        return template('signup.html')
+        return template("login.html")
+        
+        
+def loginCheck(username, password):
+    conn=sqlite3.connect('login.db')
+    c=conn.cursor()
+    c.execute("SELECT name FROM details WJERE name LIKE ? and password LIKE ?",(username, password))
+    result=c.fetchall()
+    print(result)
+    if result:
+        print("successful")
+        return redirect('/profile')
+    else:
+        print("Invalid login")
+        return redirect("/login")
 
 
 @error(403)
