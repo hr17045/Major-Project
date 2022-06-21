@@ -1,25 +1,56 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Styled Login Form - UI/UX Tutorial</title>
+<head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
-    <link rel="stylesheet" href="static/login.css">
-  </head>
-  <body>
-    <form class="login-form" action="./" method="POST">
-      <div class="login-form__logo-container">
-        <img class="login-form__logo" src="/assets/dcode-logo-white-transparent.png" alt="Logo">
-      </div>
-      <div class="login-form__content">
-        <div class="login-form__header">Login to your account</div>
-        <input class="login-form__input" type="text" name="dc_username" placeholder="Username">
-        <input class="login-form__input" type="password" name="dc_password" placeholder="Password">
-        <button class="login-form__button" type="submit">Login</button>
-        <div class="login-form__links">
-          <a href="./" class="login-form__link">Forgot your password?</a>
-        </div>
-      </div>
-    </form>
-  </body>
-</html>
+    <title>Login / Sign Up Form</title>
+    <link rel="shortcut icon" href="/assets/favicon.ico">
+    <link rel="stylesheet" href="./static/main.css">
+</head>
+<body>
+    <div class="container">
+        <form class="form" id="login">
+            <h1 class="form__title">Login</h1>
+            <div class="form__message form__message--error"></div>
+            <div class="form__input-group">
+                <input type="text" class="form__input" autofocus placeholder="Username or email">
+                <div class="form__input-error-message"></div>
+            </div>
+            <div class="form__input-group">
+                <input type="password" class="form__input" autofocus placeholder="Password">
+                <div class="form__input-error-message"></div>
+            </div>
+            <button class="form__button" type="submit">Continue</button>
+            <p class="form__text">
+                <a href="#" class="form__link">Forgot your password?</a>
+            </p>
+            <p class="form__text">
+                <a class="form__link" href="./" id="linkCreateAccount">Don't have an account? Create account</a>
+            </p>
+        </form>
+        <form class="form form--hidden" id="createAccount">
+            <h1 class="form__title">Create Account</h1>
+            <div class="form__message form__message--error"></div>
+            <div class="form__input-group">
+                <input type="text" id="signupUsername" class="form__input" autofocus placeholder="Username">
+                <div class="form__input-error-message"></div>
+            </div>
+            <div class="form__input-group">
+                <input type="text" class="form__input" autofocus placeholder="Email Address">
+                <div class="form__input-error-message"></div>
+            </div>
+            <div class="form__input-group">
+                <input type="password" class="form__input" autofocus placeholder="Password">
+                <div class="form__input-error-message"></div>
+            </div>
+            <div class="form__input-group">
+                <input type="password" class="form__input" autofocus placeholder="Confirm password">
+                <div class="form__input-error-message"></div>
+            </div>
+            <button class="form__button" type="submit">Continue</button>
+            <p class="form__text">
+                <a class="form__link" href="./" id="linkLogin">Already have an account? Sign in</a>
+            </p>
+        </form>
+    </div>
+    <script src="./static/main.js"></script>
+</body>
