@@ -1,5 +1,6 @@
 import sqlite3
-from bottle import route, run, debug, template, request, static_file, error, view, static_file, redirect
+from bottle import route, run, debug, template, request, static_file, error, view, static_file, redirect 
+
 
 # only needed when you run Bottle on mod_wsgi
 from bottle import default_app
@@ -144,30 +145,31 @@ def new_item():
         return template('signup.html')
 
 @route('/login', method='GET')
+@view('login.html')
 def login():
-    if request.GET.login:
-        username=request.GET.Name.strip()
-        password=request.GET.Passowrd.strip()
-        if loginCheck():
-            return redirect('/home')
+    pass
+    
+@route('/login', method="POST")
+@view('login.html')
+def Pos_login():
+    if request.POST.save:
+        username=request.POST.name.strip()
+        password=request.POST.password.strip()
+        conn=sqlite3.connect('login.db')
+        c=conn.cursor()
+        c.execute("SELECT name FROM details WHERE name LIKE ? and password LIKE ?",(username, password))
+        result=c.fetchall()
+        print(result)
+        if result:
+            print("successful")
+            redirect('/home')
         else:
-            return redirect('/signup')
-    else:
-        return template("login.html")
-        
-        
-def loginCheck(username, password):
-    conn=sqlite3.connect('login.db')
-    c=conn.cursor()
-    c.execute("SELECT name FROM details WJERE name LIKE ? and password LIKE ?",(username, password))
-    result=c.fetchall()
-    print(result)
-    if result:
-        print("successful")
-        return redirect('/profile')
-    else:
-        print("Invalid login")
-        return redirect("/login")
+            print("Invalid login")
+            redirect("/login")
+
+
+
+
 
 
 @error(403)
@@ -178,6 +180,7 @@ def mistake403(code):
 @error(404)
 def mistake404(code):
     return 'Sorry, this page does not exist!'
+
 
 
 

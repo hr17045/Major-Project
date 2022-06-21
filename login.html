@@ -1,6 +1,25 @@
-Login
-<form action="/login" method="GET">
-  <input type="text" size="100" maxlength="100" name="name" placeholder="Name">
-  <input type="text" size="100" maxlength="100" name="password" placeholder="Password">
-  <input type="submit" name="save" value="Login">
-</form>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Styled Login Form - UI/UX Tutorial</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="static/login.css">
+  </head>
+  <body>
+    <form class="login-form" action="./" method="POST">
+      <div class="login-form__logo-container">
+        <img class="login-form__logo" src="/assets/dcode-logo-white-transparent.png" alt="Logo">
+      </div>
+      <div class="login-form__content">
+        <div class="login-form__header">Login to your account</div>
+        <input class="login-form__input" type="text" name="dc_username" placeholder="Username">
+        <input class="login-form__input" type="password" name="dc_password" placeholder="Password">
+        <button class="login-form__button" type="submit">Login</button>
+        <div class="login-form__links">
+          <a href="./" class="login-form__link">Forgot your password?</a>
+        </div>
+      </div>
+    </form>
+  </body>
+</html>
