@@ -1,211 +1,140 @@
-body {
-    --color-primary: #009579;
-    --color-primary-dark: #007f67;
-    --color-secondary: #252c6a;
-    --color-error: #cc3333;
-    --color-success: #4bb544;
-    --border-radius: 4px;
-
-    margin: 0;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    background: url(./background.jpg);
-    background-size: cover;
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+.btn{
+  position: absolute;
+  top: 15px;
+  left: 45px;
+  height: 45px;
+  width: 45px;
+  text-align: center;
+  background: #1b1b1b;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: left 0.4s ease;
+}
+.btn.click{
+  left: 260px;
+}
+.btn span{
+  color: white;
+  font-size: 28px;
+  line-height: 45px;
+}
+.btn.click span:before{
+  content: '\f00d';
+}
+.sidebar{
+  position: fixed;
+  width: 250px;
+  height: 100%;
+  left: -250px;
+  background: #1b1b1b;
+  transition: left 0.4s ease;
+}
+.sidebar.show{
+  left: 0px;
+}
+.sidebar .text{
+  color: white;
+  font-size: 25px;
+  font-weight: 600;
+  line-height: 65px;
+  text-align: center;
+  background: #1e1e1e;
+  letter-spacing: 1px;
+}
+nav ul{
+  background: #1b1b1b;
+  height: 100%;
+  width: 100%;
+  list-style: none;
+}
+nav ul li{
+  line-height: 60px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+nav ul li:last-child{
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+nav ul li a{
+  position: relative;
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  padding-left: 40px;
+  font-weight: 500;
+  display: block;
+  width: 100%;
+  border-left: 3px solid transparent;
+}
+nav ul li.active a{
+  color: cyan;
+  background: #1e1e1e;
+  border-left-color: cyan;
+}
+nav ul li a:hover{
+  background: #1e1e1e;
+}
+nav ul ul{
+  position: static;
+  display: none;
+}
+nav ul .feat-show.show{
+  display: block;
+}
+nav ul .serv-show.show1{
+  display: block;
+}
+nav ul ul li{
+  line-height: 42px;
+  border-top: none;
+}
+nav ul ul li a{
+  font-size: 17px;
+  color: #e6e6e6;
+  padding-left: 80px;
+}
+nav ul li.active ul li a{
+  color: #e6e6e6;
+  background: #1b1b1b;
+  border-left-color: transparent;
+}
+nav ul ul li a:hover{
+  color: cyan!important;
+  background: #1e1e1e!important;
+}
+nav ul li a span{
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  font-size: 22px;
+  transition: transform 0.4s;
+}
+nav ul li a span.rotate{
+  transform: translateY(-50%) rotate(-180deg);
+}
+.content{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  color: #202020;
+  z-index: -1;
+  text-align: center;
+}
+.content .header{
+  font-size: 45px;
+  font-weight: 600;
+}
+.content p{
+  font-size: 30px;
+  font-weight: 500;
 }
 
-.container {
-    width: 400px;
-    max-width: 400px;
-    margin: 1rem;
-    padding: 2rem;
-    box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
-    border-radius: var(--border-radius);
-    background: #ffffff;
-}
-
-.container,
-.form__input,
-.form__button {
-    font: 500 1rem 'Quicksand', sans-serif;
-}
-
-.form--hidden {
-    display: none;
-}
-
-.form > *:first-child {
-    margin-top: 0;
-}
-
-.form > *:last-child {
-    margin-bottom: 0;
-}
-
-.form__title {
-    margin-bottom: 2rem;
-    text-align: center;
-}
-
-.form__message {
-    text-align: center;
-    margin-bottom: 1rem;
-}
-
-.form__message--success {
-    color: var(--color-success);
-}
-
-.form__message--error {
-    color: var(--color-error);
-}
-
-.form__input-group {
-    margin-bottom: 1rem;
-}
-
-.form__input {
-    display: block;
-    width: 100%;
-    padding: 0.75rem;
-    box-sizing: border-box;
-    border-radius: var(--border-radius);
-    border: 1px solid #dddddd;
-    outline: none;
-    background: #eeeeee;
-    transition: background 0.2s, border-color 0.2s;
-}
-
-.form__input:focus {
-    border-color: var(--color-primary);
-    background: #ffffff;
-}
-
-.form__input--error {
-    color: var(--color-error);
-    border-color: var(--color-error);
-}
-
-.form__input-error-message {
-    margin-top: 0.5rem;
-    font-size: 0.85rem;
-    color: var(--color-error);
-}
-
-.form__button {
-    width: 100%;
-    padding: 1rem 2rem;
-    font-weight: bold;
-    font-size: 1.1rem;
-    color: #ffffff;
-    border: none;
-    border-radius: var(--border-radius);
-    outline: none;
-    cursor: pointer;
-    background: var(--color-primary);
-}
-
-.form__button:hover {
-    background: var(--color-primary-dark);
-}
-
-.form__button:active {
-    transform: scale(0.98);
-}
-
-.form__text {
-    text-align: center;
-}
-
-.form__link {
-    color: var(--color-secondary);
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.form__link:hover {
-    text-decoration: underline;
-}
-
-/* sidebar */
-:root {
-    --nav-icon-width: 50px;
-    --nav-border-width: 8px;
-  }
-  
-  html,
-  body {
-    height: 100%;
-    margin: 0;
-    font-family: sans-serif;
-  }
-  
-  .page-container {
-    height: inherit;
-    display: flex;
-  }
-  
-  .main {
-    height: inherit;
-    padding: 0;
-    padding-left: var(--nav-border-width);
-    overflow-y: auto;
-  }
-  
-  .nav {
-    width: 200px;
-    height: inherit;
-    position: relative;
-    background-color: #eeeeee;
-    transition: width 0.2s;
-    flex-shrink: 0;
-  }
-  
-  .nav--collapsed {
-    width: var(--nav-icon-width);
-  }
-  
-  .nav--collapsed .nav__label {
-    display: none;
-  }
-  
-  .nav__link {
-    display: flex;
-    align-items: center;
-    color: rgba(0, 0, 0, 0.75);
-    text-decoration: none;
-  }
-  
-  .nav__link:hover {
-    background-color: #dddddd;
-  }
-  
-  .nav__icon-container {
-    width: var(--nav-icon-width);
-    height: var(--nav-icon-width);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-  
-  .nav__label {
-    white-space: nowrap;
-  }
-  
-  .nav__border {
-    position: absolute;
-    left: 100%;
-    top: 0;
-    width: var(--nav-border-width);
-    height: inherit;
-    background-color: #dddddd;
-    transition: background-color 0.2s;
-    cursor: ew-resize;
-  }
-  
-  .nav__border:hover {
-    background-color: #cccccc;
-  }

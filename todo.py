@@ -1,22 +1,17 @@
+import re
 import sqlite3
-from bottle import route, run, debug, template, request, static_file, error, view, static_file, redirect 
+from bottle import route, run, debug, template, request, static_file, error, view, static_file, redirect
 
 
 # only needed when you run Bottle on mod_wsgi
 from bottle import default_app
 from datetime import date
-
-from flask import redirect
+req = 0
 
 #mainpage
 @route('/home')
-@view('main')
 def main():
-    today = date.today()
-
-    return dict(
-        day = today.strftime('%A')
-    )
+    return template("main.html", req = req)
 
 #route for static files
 @route('/static/<filepath:path>')
@@ -56,9 +51,11 @@ def new_item():
         return '<p>The new task was inserted into the database, the ID is %s</p>' % new_id
 
     else:
-        return template('new_task.html')
+        return template('new_task.html') 
 
-
+@route("/hi", method = "GET")
+def select_edit():
+    redirect("/edit/1")
 @route('/edit/<no:int>', method='GET')
 def edit_item(no):
 
@@ -85,6 +82,10 @@ def edit_item(no):
 
         return template('edit_task', old=cur_data, no=no)
 
+#c.execute("SELECT task FROM table WHERE ID = ?", (no))
+#cur_data = c.fetchone()
+#if not cur_data():
+    #return template("itemdoesntexist.html")
 
 @route('/item<item:re:[0-9]+>')
 def show_item(item):
@@ -121,56 +122,6 @@ def show_json(json):
     else:
         return {'task': result[0]}
 
-@route('/signup', method='GET')
-def new_item():
-
-    if request.GET.save:
-
-        new = request.GET.name.strip()
-        new1 = request.GET.password.strip()
-
-
-        conn = sqlite3.connect('login.db')
-        c = conn.cursor()
-
-        c.execute("INSERT INTO details (name,password) VALUES (?,?)", (new,new1))
-
-        conn.commit()
-        c.close()
-        today = date.today()
-
-        
-        return template('main.html', day = today.strftime('%A'))
-    else:
-        return template('signup.html')
-
-@route('/login', method='GET')
-@view('login.html')
-def login():
-    pass
-    
-@route('/login', method="POST")
-@view('login.html')
-def Pos_login():
-    if request.POST.save:
-        username=request.POST.name.strip()
-        password=request.POST.password.strip()
-        conn=sqlite3.connect('login.db')
-        c=conn.cursor()
-        c.execute("SELECT name FROM details WHERE name LIKE ? and password LIKE ?",(username, password))
-        result=c.fetchall()
-        print(result)
-        if result:
-            print("successful")
-            redirect('/home')
-        else:
-            print("Invalid login")
-            redirect("/login")
-
-
-
-
-
 
 @error(403)
 def mistake403(code):
@@ -182,8 +133,9 @@ def mistake404(code):
     return 'Sorry, this page does not exist!'
 
 
-
-
+@route('/edititem')
+def edit():
+    return template('edititem.html')
 
 debug(True)
 run(reloader=True)
