@@ -11,7 +11,7 @@ req = 0
 #mainpage
 @route('/home')
 def main():
-    return template("main.html", req = req)
+    return template("main.html")
 
 #route for static files
 @route('/static/<filepath:path>')
@@ -53,9 +53,15 @@ def new_item():
     else:
         return template('new_task.html') 
 
-@route("/hi", method = "GET")
+@route("/edit", method = "GET")
+@view('select.html')
 def select_edit():
-    redirect("/edit/1")
+    
+    req = request.GET.option_value()
+    redirect("/edit/{}".format(req))
+
+
+     #   return template('select.html')
 @route('/edit/<no:int>', method='GET')
 def edit_item(no):
 
@@ -141,3 +147,4 @@ debug(True)
 run(reloader=True)
 # remember to remove reloader=True and debug(True) when you move your
 # application from development to a productive environment
+

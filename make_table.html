@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<!-- Created By CodingNepal -->
 <html lang="en" dir="ltr">
    <head>
       <meta charset="utf-8">
       <title>Todo</title>>
+      <link rel="stylesheet" href="static/main.css">
       <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-      <link href="static/main.css" rel="stylesheet" />
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
    </head>
    <body>
@@ -14,7 +13,7 @@
       </div>
       <nav class="sidebar">
          <div class="text">
-            Side Menu
+            Menu
          </div>
          <ul>
             <li class="active"><a href="#">Home</a></li>
@@ -41,11 +40,18 @@
       </nav>
       <div class="content">
          <div class="header">
-            Sidebar Menu with sub-menu
+            %#template to generate a HTML table from a list of tuples (or list of lists, or tuple of tuples or ...)
+            <p>The open items are as follows:</p>
+            <table border="1">
+            %for row in rows:
+            <tr>
+            %for col in row:
+               <td>{{col}}</td>
+            %end
+            </tr>
+            %end
+            </table>
          </div>
-         <p>
-            HTML CSS & Javascript (Full Tutorial)
-         </p>
       </div>
       <script>
          $('.btn').click(function(){
@@ -64,22 +70,6 @@
              $(this).addClass("active").siblings().removeClass("active");
            });
       </script>
-
-
-
-
-
-%#template to generate a HTML table from a list of tuples (or list of lists, or tuple of tuples or ...)
-<p>The open items are as follows:</p>
-<table border="1">
-%for row in rows:
-  <tr>
-  %for col in row:
-    <td>{{col}}</td>
-  %end
-  </tr>
-%end
-</table>
 
 </body>
 </html>
