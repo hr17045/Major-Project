@@ -7,39 +7,40 @@
       <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
    </head>
+
+   <style>
+
+      .container {
+         justify-content: center;
+         text-align: center;
+         width: auto;
+      }
+
+   </style>
+
+
    <body>
       <div class="btn">
          <span class="fas fa-bars"></span>
       </div>
       <nav class="sidebar">
          <div class="text">
-            Menu
+             Menu
          </div>
          <ul>
-            <li class="active"><a href="#">Home</a></li>
-            <li>
+             <li class="active"><a href="/">Home</a></li>
+             <li>
                <a href="/new" class="feat-btn">Add Task
-               <span class="fas fa-caret-down first"></span>
                </a>
-               <ul class="feat-show">
-                  <li><a href="#">Pages</a></li>
-                  <li><a href="#">Elements</a></li>
-               </ul>
-            </li>
-            <li>
-               <a href="" class="serv-btn">View List
-            </li>
-            <li><a href="">Edit List</a></li>
+               
+             </li>
+             <li>
+               <a href="/todo" class="serv-btn">View List
+             </li>
+             <li><a href="/find_item">Edit List</a></li>
          </ul>
-      </nav>
-      <div class="content">
-         <div class="header">
-            Welcome to the To-Do List!
-         </div>
-         <p>
-            Use the sidebar to add, delete, edit and view the list
-         </p>
-      </div>
+       </nav>
+     
       <script>
          $('.btn').click(function(){
            $(this).toggleClass("click");
@@ -61,12 +62,13 @@
 
 
 
-
-%#template for the form for a new task
-<p>Add a new task to the ToDo list:</p>
-<form action="/new" method="GET">
-  <input type="text" size="100" maxlength="100" name="task">
-  <input type="submit" name="save" value="save">
-</form>
+<div class = "container">
+   %#template for the form for a new task
+   <p>Add a new task to the ToDo list:</p>
+   <form action="/new" method="GET">
+      <input type="text" size="100" maxlength="100" name="task">
+      <input type="submit" name="save" value="save">
+   </form>
+</div>
 </body>
 </html>

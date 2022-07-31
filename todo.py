@@ -9,6 +9,7 @@ from datetime import date
 req = 0
 
 #mainpage
+@route("/")
 @route('/home')
 def main():
     return template("main.html")
@@ -53,7 +54,6 @@ def new_item():
     else:
         return template('new_task.html') 
 
-@route("/edit", method = "GET")
 @view('select.html')
 def select_edit():
     
@@ -62,36 +62,60 @@ def select_edit():
 
 
      #   return template('select.html')
-@route('/edit/<no:int>', method='GET')
+
+
+
+@route('/find_item', method = 'GET')   # executed from index.html and button 'edit item in Todo list' pressed
+def show_all_items():
+    conn = sqlite3.connect('todo.db')
+    c = conn.cursor()
+    c.execute("SELECT id, task FROM todo")
+    result = c.fetchall()             # fetches all items in Todo database and stores data in variable 'result'
+    c.close()
+    
+    return template('find_edit_item.tpl',rows=result) # sends result data to template to display all items in todo list and choose item to edit
+
+
+@route('/find_item', method = 'POST')   # returns edit item ID and stores in variable edit_id
+def edit_item_found():
+    edit_id = request.POST.get('todoID','').strip()
+    redirect('/edit/{}'.format(edit_id))
+
+@route('/edit/<no:int>')
 def edit_item(no):
 
     if request.GET.save:
-        edit = request.GET.task.strip()
-        status = request.GET.status.strip()
+        edit = request.GET.task.strip()              #returns task from edit template and stores in variable 'edit' to update Database#
+        status = request.GET.status.strip()         # returns status from edit template and stores in variable 'status' to update Database
 
-        if status == 'open':
-            status = 1
+        if status == 'open':                    
+            status = 1                              # stores appropriate value to update status value in Database
         else:
             status = 0
 
         conn = sqlite3.connect('todo.db')
         c = conn.cursor()
-        c.execute("UPDATE todo SET task = ?, status = ? WHERE id LIKE ?", (edit, status, no))
-        conn.commit()
+        c.execute("UPDATE todo SET task = ?, status = ? WHERE id LIKE ?", (edit, status, no))   # queries Database and updates entry
+        conn.commit()                           # writes data to file
 
-        return '<p>The item number %s was successfully updated</p>' % no
+        return template('edit_exit.tpl',no=no)  # after editing, displays template for confirmation message and button to return to index page
     else:
         conn = sqlite3.connect('todo.db')
         c = conn.cursor()
-        c.execute("SELECT task FROM todo WHERE id LIKE ?", (str(no)))
+        c.execute("SELECT task FROM todo WHERE id LIKE ?", (str(no),))
         cur_data = c.fetchone()
 
-        return template('edit_task', old=cur_data, no=no)
+        if not cur_data:
+            redirect('/invalid_item')
 
-#c.execute("SELECT task FROM table WHERE ID = ?", (no))
-#cur_data = c.fetchone()
-#if not cur_data():
-    #return template("itemdoesntexist.html")
+        return template('edit_task.tpl', old=cur_data, no=no)    # template to display item for editing
+
+
+#------------------------------------------------------------------------------------------------------------
+# Find Item to Delete Block
+#------------------------------------------------------------------------------------------------------------
+
+
 
 @route('/item<item:re:[0-9]+>')
 def show_item(item):
